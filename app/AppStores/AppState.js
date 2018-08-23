@@ -58,9 +58,12 @@ class AppState {
     Reactions.auto.listenConfig(this)
     Reactions.auto.listenConnection(this)
     this.getRateETHDollar()
+    this.getGasPriceEstimate()
+  }
+
+  startAllBgJobs() {
     this.BgJobs.CheckBalance.start()
     this.BgJobs.CheckPendingTransaction.start()
-    this.getGasPriceEstimate()
   }
 
   @action setConfig = (cf) => { this.config = cf }

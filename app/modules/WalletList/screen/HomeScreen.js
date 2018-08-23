@@ -57,7 +57,7 @@ export default class HomeScreen extends Component {
         isLaunchApp: true,
         onUnlock: () => {
           TickerStore.callApi()
-          MainStore.appState.startAllServices()
+          MainStore.appState.startAllBgJobs()
           if (!NotificationStore.isInitFromNotification) {
             if (MainStore.appState.wallets.length === 0) {
               this._gotoCreateWallet()

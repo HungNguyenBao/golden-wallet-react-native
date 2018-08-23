@@ -31,7 +31,7 @@ class MainStore {
   @action async startApp() {
     await AppDS.readAppData()
     PushNotificationHelper.init()
-    // appState.startAllServices()
+    appState.startAllServices()
   }
 
   goToSendTx() {
