@@ -190,13 +190,14 @@ export default class Wallet {
     this.loading = false
   }
 
-  @action fetchingBalance(isRefresh = false, isBackground = false) {
+  @action async fetchingBalance(isRefresh = false, isBackground = false) {
     if (this.loading) return
 
-    this.loading = true
-    this.isRefresh = isRefresh
-    this.isFetchingBalance = !isRefresh && !isBackground
-    api.fetchWalletInfo(this.address).then(async (res) => {
+    try {
+      this.loading = true
+      this.isRefresh = isRefresh
+      this.isFetchingBalance = !isRefresh && !isBackground
+      const res = await api.fetchWalletInfo(this.address)
       const { data } = res.data
       const tokens = data.tokens ? data.tokens.map(t => new WalletToken(t, this.address)) : []
       const tokenETH = this.getTokenETH(data)
@@ -206,11 +207,11 @@ export default class Wallet {
       this.balance = new BigNumber(`${data.ETH.balance}e+18`)
       this.totalBalance = totalTokenETH
       this.update()
-      MainStore.appState.syncWallets()
+      // MainStore.appState.syncWallets()
       this.offLoading()
-    }).catch((e) => {
+    } catch (e) {
       this.offLoading()
-    })
+    }
   }
 
   @action setTokens(tokens) {

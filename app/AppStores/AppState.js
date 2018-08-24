@@ -62,6 +62,8 @@ class AppState {
   }
 
   startAllBgJobs() {
+    this.BgJobs.CheckBalance.doOnce()
+    this.BgJobs.CheckPendingTransaction.doOnce()
     this.BgJobs.CheckBalance.start()
     this.BgJobs.CheckPendingTransaction.start()
   }
